@@ -1,2 +1,29 @@
-<h2> Movies Main Page </h2>
-<a href = "/logout"> Log Out </a>
+<nav>
+<a  class = "link_button" href = "/"> Home </a>
+<a  class = "link_button" href = "/users/<%=@user.slug%>"><%=@user.username%> Main Page </a>
+<a  class = "link_button" href = "/logout"> Log Out </a>
+</nav>
+
+<h2> Movie Main Page </h2>
+
+
+
+
+<% Movie.all.each do |movie| %>
+	<table>
+		<tr>
+		    <td rowspan = "2">
+				<a href ="/movies/<%=movie.id%>"><img src ="<%= movie.pic_url%>"></a>
+		    </td>
+		    <td class = "movie_detail">
+		    	<div class = "movie_name"><%= movie.name%></div>
+		    	<div>Year: <%= movie.year %></div>
+		    	<div>Rating: <%= movie.average_rating%> out of 5.0</div>
+		    	<br></br>
+		    	<div><%= movie.description%></div>
+		    </td> 
+		 </tr>
+	</table>
+<% end %>
+
+
