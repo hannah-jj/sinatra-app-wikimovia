@@ -1,0 +1,9 @@
+<h2> Welcome, <%=@user.username%>  </h2>
+<% @user.ratings.each do |rating|%>
+<ul>
+	<li><p><%= rating.movie.name %></p>
+		<p><%= rating.star %></p>
+		<p><%= rating.review %></p>
+	</li>
+</ul>
+<% end %>

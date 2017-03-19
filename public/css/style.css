@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Jim+Nightshade');
+
+h1 {
+	font-family: 'Jim Nightshade', cursive;
+	font-size: 5em;
+}
+
+h1 a {
+	text-decoration:  none;
+	color: 833174;
+}
+
+p { /* select all <p> */
+	font-size: 1em;
+	line-height: 1.5em;
+}
+
+#error_message {
+	background-color: #f44336;
+}
+
+#logout_message {
+	background-color: #4CAF50;
+}
+
+
