@@ -1,7 +1,8 @@
 <nav>
-<a  class = "link_button" href = "/"> Home </a>
-<a  class = "link_button" href = "/users/<%=@user.slug%>"><%=@user.username%> Main Page </a>
-<a  class = "link_button" href = "/logout"> Log Out </a>
+<a class = "link_button" href = "/">Home</a>
+<a class = "link_button" href = "/users/<%=current_user.id%>"><%=current_user.username%>Main Page</a>
+<a class = "link_button" href = "/logout">Log Out</a>
+<a class = "link_button" href = "/movies/new">Add New Movie</a>
 </nav>
 
 <h2> Movie Main Page </h2>

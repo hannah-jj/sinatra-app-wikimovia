@@ -1,0 +1,62 @@
+<nav>
+<a class = "link_button" href = "/">Home</a>
+<a class = "link_button" href = "/users/<%=current_user.id%>"><%=current_user.username%>Main Page</a>
+
+<a class = "link_button" href = "/movies/<%=@movie.id%>/edit">Edit Movie Info</a>
+<a class = "link_button" href = "/movies/<%=@movie.id%>/edit">Add Review</a>
+<a class = "link_button" href = "/logout">Log Out </a>
+</nav>
+
+<table>
+		<tr>
+		    <td rowspan = "2">
+				<img src ="<%=@movie.pic_url%>">
+		    </td>
+		    <td class = "movie_detail">
+		    	<div class = "movie_name"><%= @movie.name%></div>
+		    	<div>Year: <%= @movie.year %></div>
+		    	<div>Rating: <%= @movie.average_rating%> out of 5.0</div>
+		    	<br></br>
+		    	<div><%= @movie.description%></div>
+		    </td> 
+		</tr>
+</table>
+
+
+<!-- add rating
+-->
+<a href="#hide" id="hide">Add Rating</a>
+<a href="#show" id="show">Hide</a>
+<div class="add_rating">
+	<form method = "post" action = "/ratings/new">
+		<p>Stars: <input type = "text" name = "rating[star]"></p>
+		<p>Review: <input type = "text" name = "rating[review]"></p>
+		<input type = "hidden" name ="rating[user_id]" value ="<%=current_user.id%>">
+		<input type = "hidden" name ="rating[movie_id]" value ="<%=@movie.id%>">
+		<input type = "submit" value = "Create Review">
+	</form>
+</div>
+
+
+<table>
+	<tr id = "review">
+		<th> User</th>
+		<th> Stars</th>
+		<th> Review</th>
+		<th> Time Updated </th>
+	</tr>
+	<% @movie.ratings.each do |rating|%>
+		<tr>
+			<td><a href = "/users/<%=rating.user.id%>"><%= rating.user.username %></a></td>
+			<td><% rating.star.times do %>
+				&#11088;
+				<% end %>
+			</td>
+			<td><%= rating.review %></td>
+			<td><%= rating.updated_at %></td>
+		</tr>
+	<% end %>
+</table>
+
+
+<h3> Average Rating: <%= @movie.average_rating %></h3>

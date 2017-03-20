@@ -1,0 +1,17 @@
+<nav>
+<a class = "link_button" href = "/">Home</a>
+<a class = "link_button" href = "/users/<%=current_user.id%>"><%=current_user.username%>Main Page</a>
+<a class = "link_button" href = "/logout">Log Out</a>
+<a class = "link_button" href = "/movies/new">Add New Movie</a>
+</nav>
+
+<h2>Edit Movie Information: </h2>
+<form method = "post" action = "/movies/<%=@movie.id%>">
+<p> Movie Name: <input type = "text" name = "movie[name]" value ="<%=@movie.name%>"></p>
+<p> Year: <input type = "text" name = "movie[year]" value ="<%=@movie.year%>"></p>
+<p> Description: <input type = "text" name = "movie[description]" value ="<%=@movie.description%>"></p>
+<p> Link for a image: <input type = "text" name = "movie[pic_url]" value ="<%=@movie.pic_url%>"></p>
+<input type = "hidden" name = "_method" value ="patch">
+<input type = "submit" value = "Edit Movie Info">
+</form>
+

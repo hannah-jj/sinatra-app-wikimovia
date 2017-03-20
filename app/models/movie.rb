@@ -9,8 +9,12 @@ class Movie < ActiveRecord::Base
 
   def average_rating
   	sum = 0.0
-  	self.ratings.each {|rating| sum += rating.star}
-  	sum / self.ratings.count
+    if self.ratings.count == 0
+      "No Rating Yet"
+    else
+  	   self.ratings.each {|rating| sum += rating.star}
+  	   sum / self.ratings.count
+     end
   end
 
 end

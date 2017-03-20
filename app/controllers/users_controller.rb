@@ -1,7 +1,7 @@
 require './config/environment'
 
 class UsersController < ApplicationController
-
+use Rack::MethodOverride
 
   get '/signup' do
     erb :'users/signup'
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   	user = User.find_by(:username => params[:username])
     if user && user.authenticate(params[:password])
         session[:id] = user.id
-        redirect "/users/#{user.slug}"
+        redirect "/users/#{user.id}"
     else
         @message = "Please enter valid credential"
         erb :"/users/login"
@@ -51,14 +51,36 @@ class UsersController < ApplicationController
   	end
   end
 
-  get '/users/:slug' do
+  get '/users/:id' do
     if logged_in?
-      @user = current_user
+      @user = User.find(params[:id])
       erb :"users/show"
     else
       redirect "/login"
     end
   end
+
+  patch '/users/:id' do
+  	@user = User.find(params[:id])
+  	if params[:user][:username] == "" || params[:user][:email] == "" || params[:user][:password] == ""
+      "Please fill out all fields.<a href='/users/#{@user.id}/edit'> click here to go back to edit</a>"
+     else
+     	@user.update(params[:user])
+     	@user.save
+     	redirect "/users/#{@user.id}"
+     end
+
+  end
+
+
+  get '/users/:id/edit' do
+    if logged_in?
+      erb :"users/edit"
+    else
+      redirect "/login"
+    end
+  end
+
 
   
 

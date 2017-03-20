@@ -1,12 +1,13 @@
 require './config/environment'
 
 class ApplicationController < Sinatra::Base
+use Rack::MethodOverride
 
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
     enable :sessions
-    set :session_secret, "wikimovia_secret"
+    set :session_secret, "secret"
   end
 
   get '/' do
