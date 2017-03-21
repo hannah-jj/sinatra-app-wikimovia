@@ -3,34 +3,35 @@
 <a class = "link_button" href = "/users/<%=current_user.id%>"><%=current_user.username%>Main Page</a>
 <% if current_user == @user %>
 	<a class = "link_button" href = "/users/<%=current_user.id%>/edit">Edit Profile</a>
+	<a class = "link_button" href = "/ratings/new">Add Rating</a>
 <% end %>
 <a class = "link_button" href = "/logout">Log Out</a>
 </nav>
 
 <h2> Reviews From *<%=@user.username%>*</h2>
+
 <table>
 	<tr id = "review">
 		<th> Movie</th>
 		<th> Stars</th>
 		<th> Review</th>
-		<% if @current_user == @user %>
+		<% if current_user == @user %>
 			<th>Edit Delete</th>
 		<% end %>
 	</tr>
-	<tr>
-		<% @user.ratings.each do |rating|%>
-		<td><a href="/movies/<%=rating.movie.id%>"><%= rating.movie.name %></a></td>
-		<td><% rating.star.times do %>
-			&#11088;
+	<% @user.ratings.each do |rating|%>
+		<tr>
+			<td><a href="/movies/<%=rating.movie.id%>"><%= rating.movie.name %></a></td>
+			<td><% rating.star.times do %>
+				&#11088;
+				<% end %>
+			</td>
+			<td><%= rating.review %></td>
+
+			<% if current_user == @user %>
+				<td><a href="/ratings/<%=rating.id%>/edit">Edit</a>
+				<a href="/ratings/<%=rating.id%>/delete">Delete</a></td>
 			<% end %>
-		</td>
-		<td><%= rating.review %></td>
-
-		<% if @current_user == @user %>
-			<td><a href="/ratings/<%=rating.id%>/edit">Edit</a>
-			<a href="/ratings/<%=rating.id%>/delete">Delete</a></td>
-		<% end %>
-
-		<% end %>
-	</tr>
+		</tr>
+	<% end %>
 </table>

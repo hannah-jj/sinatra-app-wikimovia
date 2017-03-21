@@ -28,6 +28,12 @@ use Rack::MethodOverride
        User.find(session[:id])
      end
 
+     def prompt_login
+      @message = "Please Log In first to access the contents"
+        erb :'users/login'
+     end
+
+
   end
 
 

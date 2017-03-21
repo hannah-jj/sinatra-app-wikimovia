@@ -1,0 +1,36 @@
+<nav>
+<a class = "link_button" href = "/">Home</a>
+<a class = "link_button" href = "/users/<%=current_user.id%>"><%=current_user.username%>Main Page</a>
+<% if current_user == @user %>
+	<a class = "link_button" href = "/users/<%=current_user.id%>/edit">Edit Profile</a>
+	<a class = "link_button" href = "/ratings/new">Add Rating</a>
+<% end %>
+<a class = "link_button" href = "/logout">Log Out</a>
+</nav>
+
+<h2> Edit Rating </h2>
+
+<div>
+
+	<form method = "post" action = "/ratings/new">
+		<input type = "hidden" name ="rating[user_id]" value ="<%=current_user.id%>">
+
+		<p>Movies: <select name = "rating[movie_id]">
+		<% Movie.all.each do |movie|%>
+			<option value=<%= movie.id %> <%= "selected = 'selected'" if @rating.movie_id == movie.id%> ><%= movie.name %></option>
+		<% end %>
+		</select>
+
+		<p>Stars: <select name = "rating[star]">
+		<% i = 0 %>
+		<% 6.times do %>
+			<option value=<%= i %> <%= "selected = 'selected'" if @rating.star == i %>  ><%= i %></option>
+			<% i+= 1 %>
+		<% end %>
+		</select>
+		<p>Review: <input type = "text" name = "rating[review]" value = "<%=@rating.review%>" > </p>
+		
+		<p id = "confirm_message"> Only one rating per user per movie is allowed. If a rating exists for you in this movie, the previous rating will be updated</p>
+		<br></br><input type = "submit" value = "Create Or Edit Review"></p>
+	</form>
+</div>

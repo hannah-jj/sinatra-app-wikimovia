@@ -3,7 +3,6 @@
 <a class = "link_button" href = "/users/<%=current_user.id%>"><%=current_user.username%>Main Page</a>
 
 <a class = "link_button" href = "/movies/<%=@movie.id%>/edit">Edit Movie Info</a>
-<a class = "link_button" href = "/movies/<%=@movie.id%>/edit">Add Review</a>
 <a class = "link_button" href = "/logout">Log Out </a>
 </nav>
 
@@ -23,17 +22,22 @@
 </table>
 
 
-<!-- add rating
--->
-<a href="#hide" id="hide">Add Rating</a>
-<a href="#show" id="show">Hide</a>
-<div class="add_rating">
+<div id = "add_rating">
+<% if !@rating.nil?%>
+	<%= "<p id ='confirm_message'>You have rated this movie before, the below form will update the previous rating</p>" %>
+<% end %>
 	<form method = "post" action = "/ratings/new">
-		<p>Stars: <input type = "text" name = "rating[star]"></p>
-		<p>Review: <input type = "text" name = "rating[review]"></p>
+		<p>Stars: <select name = "rating[star]">
+		<% i = 0 %>
+		<% 6.times do %>
+			<option value=<%= i %> ><%= i %></option>
+			<% i+= 1 %>
+		<% end %>
+		</select>
+		Review: <input type = "text" name = "rating[review]">
 		<input type = "hidden" name ="rating[user_id]" value ="<%=current_user.id%>">
 		<input type = "hidden" name ="rating[movie_id]" value ="<%=@movie.id%>">
-		<input type = "submit" value = "Create Review">
+		<input type = "submit" value = "Create Or Edit Review"></p>
 	</form>
 </div>
 
@@ -43,9 +47,9 @@
 		<th> User</th>
 		<th> Stars</th>
 		<th> Review</th>
-		<th> Time Updated </th>
+		<th> Time Created </th>
 	</tr>
-	<% @movie.ratings.each do |rating|%>
+	<% @movie.ratings.reverse.each do |rating|%>
 		<tr>
 			<td><a href = "/users/<%=rating.user.id%>"><%= rating.user.username %></a></td>
 			<td><% rating.star.times do %>
@@ -53,7 +57,7 @@
 				<% end %>
 			</td>
 			<td><%= rating.review %></td>
-			<td><%= rating.updated_at %></td>
+			<td><%= rating.created_at %></td>
 		</tr>
 	<% end %>
 </table>

@@ -27,6 +27,7 @@ p { /* select all <p> */
 	background-color: #4CAF50;
 }
 
+
 nav {
 	margin: 10px 0px;
 }
@@ -67,16 +68,3 @@ td .movie_detail{
 	font-weight: bold;
 }
 
-.add_rating, #show, #hide:target {
-    display: none; 
-}
-
-#hide:target + #show,
-#hide:target ~ .add_rating {
-    display: inline; 
-}
-
-#hide{
-	background-color: hsl(270, 100%, 85%);
-	color: #FFF;
-}

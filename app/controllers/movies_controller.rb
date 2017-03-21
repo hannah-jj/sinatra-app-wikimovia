@@ -7,8 +7,7 @@ use Rack::MethodOverride
     if logged_in?
       erb :'movies/index'
     else
-      @message = "Please Log In first to access the contents"
-      erb :'users/login'
+      prompt_login
     end
   end
 
@@ -16,8 +15,7 @@ use Rack::MethodOverride
     if logged_in?
       erb :'movies/new'
     else
-      @message = "Please Log In first to access the contents"
-      erb :'users/login'
+      prompt_login
     end
   end
 
@@ -30,10 +28,10 @@ use Rack::MethodOverride
   get '/movies/:id' do
     if logged_in?
       @movie = Movie.find(params[:id])
+      @rating = Rating.find_by(movie_id: @movie.id, user_id: current_user.id) 
       erb :'movies/show'
     else
-      @message = "Please Log In first to access the contents"
-      erb :'users/login'
+      prompt_login
     end
   end
 
@@ -49,12 +47,8 @@ use Rack::MethodOverride
       @movie = Movie.find(params[:id])
       erb :'movies/edit'
     else
-      @message = "Please Log In first to access the contents"
-      erb :'users/login'
+      prompt_login
     end
   end
-
-
-
 
 end

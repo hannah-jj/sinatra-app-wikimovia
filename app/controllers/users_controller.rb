@@ -46,8 +46,7 @@ use Rack::MethodOverride
   		@log_out_message = "You have successfully logged out.<a href='/'> click here to go back to home page</a>"
   		erb :'users/logout'
   	else
-  		@message = "You haven't logged in yet. Please log in first."
-  		erb :'users/login'
+  		prompt_login
   	end
   end
 
@@ -56,7 +55,7 @@ use Rack::MethodOverride
       @user = User.find(params[:id])
       erb :"users/show"
     else
-      redirect "/login"
+      prompt_login
     end
   end
 
@@ -77,7 +76,7 @@ use Rack::MethodOverride
     if logged_in?
       erb :"users/edit"
     else
-      redirect "/login"
+      prompt_login
     end
   end
 
