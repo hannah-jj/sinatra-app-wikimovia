@@ -50,12 +50,14 @@ use Rack::MethodOverride
 	  		@rating.delete
 	  		redirect "/users/#{current_user.id}"
 	  	else
-	  		"You don't have permission to edit other users' rating. <a href='/'> click here to go back to home page</a>"
+	  		"You don't have permission to edit other users' rating. Or the rating doesn't exist<a href='/'> click here to go back to home page</a>"
 	  	end
 	 else
 	 	prompt_login
 	 end
   end
+
+  
 
 
 

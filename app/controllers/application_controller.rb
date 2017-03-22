@@ -11,7 +11,9 @@ use Rack::MethodOverride
   end
 
   get '/' do
-  	if logged_in?
+    if User.all.empty? #in case of brand new start up with no user at all in the table
+      erb :index
+  	elsif logged_in?
   		redirect "/movies"
   	else
    		erb :index

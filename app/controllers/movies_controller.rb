@@ -51,4 +51,13 @@ use Rack::MethodOverride
     end
   end
 
+  get '/movies/:id/delete' do
+    if logged_in?
+      "Deleting a movie is not allowed. <a href='/'> click here to go back to home page</a>"
+    else
+      prompt_login
+    end
+  end
+
+
 end

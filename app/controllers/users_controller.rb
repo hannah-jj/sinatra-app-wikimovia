@@ -21,7 +21,10 @@ use Rack::MethodOverride
 
 
   get '/login' do
-  	if logged_in?
+    if User.all.empty? #in case of brand new start up with no user at all in the table
+  	  @message = "No user in the database, please sign up one to get started"
+      erb :'users/signup'
+    elsif logged_in?
   		@message = "You are already logged in as #{current_user.username}. <a href='/logout'> click here to log out</a>"
   		erb :'users/logout'
   	else
