@@ -3,6 +3,14 @@ require './config/environment'
 class RatingsController < ApplicationController
 use Rack::MethodOverride
 
+  get '/ratings' do
+      if logged_in?
+      redirect "/users/#{current_user.id}"
+    else
+      prompt_login
+    end
+  end
+
   get '/ratings/new' do
   	if logged_in?
       erb :'ratings/new'
@@ -38,13 +46,13 @@ use Rack::MethodOverride
 	  	else
 	  		"You don't have permission to edit other users' rating. Or the rating doesn't exist<a href='/'> click here to go back to home page</a>"
 	  	end
-	else
-		prompt_login
-	end
+	   else
+		  prompt_login
+	   end
   end
 
   get '/ratings/:id/delete' do
-  	if logged_in?
+  	 if logged_in?
 	  	@rating = Rating.find (params[:id])
 	  	if @rating.user == current_user
 	  		@rating.delete
@@ -52,9 +60,9 @@ use Rack::MethodOverride
 	  	else
 	  		"You don't have permission to edit other users' rating. Or the rating doesn't exist<a href='/'> click here to go back to home page</a>"
 	  	end
-	 else
-	 	prompt_login
-	 end
+  	 else
+  	 	prompt_login
+  	 end
   end
 
   
