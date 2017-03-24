@@ -4,18 +4,19 @@ class UsersController < ApplicationController
 use Rack::MethodOverride
 
   get '/signup' do
+    @user = User.new
     erb :'users/signup'
   end
 
 
   post '/signup' do
-    if params[:username] == "" || params[:email] == "" || params[:password] == ""
-      @message = "please fill out all fields"
-      erb :'users/signup'
-    else
-      @user = User.create(params)
-      session[:id] = @user.id
+    @user = User.new(params)
+    if @user.save
+      session[:user_id] = @user.id
       redirect to "/movies"
+    else
+      @message = @user.errors.full_messages.join(", ")
+      erb :'users/signup'
     end
   end
 
@@ -67,9 +68,11 @@ use Rack::MethodOverride
   	if params[:user][:username] == "" || params[:user][:email] == "" || params[:user][:password] == ""
       "Please fill out all fields.<a href='/users/#{@user.id}/edit'> click here to go back to edit</a>"
      else
-     	@user.update(params[:user])
-     	@user.save
-     	redirect "/users/#{@user.id}"
+     	if @user.update(params[:user])
+     	  redirect "/users/#{@user.id}"
+      else
+        "There was an error saving your profile.<a href='/users/#{@user.id}/edit'> click here to go back to edit</a>"
+      end
      end
 
   end
@@ -82,8 +85,5 @@ use Rack::MethodOverride
       prompt_login
     end
   end
-
-
-  
 
 end

@@ -1,9 +1,9 @@
 <h2> Login Page </h2>
 <p id = "error_message"><%= @message %></p>
 <form method = "post" action = "/login">
-<p>Username: <input type = "text" name = "username" placeholder="username"></p>
+<p>Username: <input required type="text" name="username" placeholder="username"></p>
 
-<p>Password: <input type = "text" name = "password" placeholder="password"></p>
+<p>Password: <input required type="password" name="password" placeholder="password"></p>
 
-<input type = "submit" value = "Login">
+<input type="submit" value="Login">
 </form>
